@@ -20,16 +20,9 @@ backup=('usr/share/calamares/modules/bootloader.conf'
         'usr/share/calamares/modules/unpackfs.conf')
 
 source=("$_pkgname-$pkgver::$url/download/v$pkgver/$_pkgname-$pkgver.tar.gz"
-	"ucode_main.py"
-	"ucode_module.desc"
-	"dm_main.py"
-	"packages_main.py"
-	"cal-ramallahos.desktop"
-	"cal-ramallahos-debugging.desktop"
-	"calamares_polkit")
+        "git+https://github.com/ramallahos/ramallahos-calamares.git")
 
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
-
+sha256sums=('SKIP' 'SKIP')
 
 prepare() {
 	sed -i -e 's/"Install configuration files" OFF/"Install configuration files" ON/' "$srcdir/${_pkgname}-${pkgver}/CMakeLists.txt"
@@ -38,10 +31,10 @@ prepare() {
 	cd ${_pkgname}-${pkgver}
 	_patchver="$(cat CMakeLists.txt | grep -m3 -e CALAMARES_VERSION_PATCH | grep -o "[[:digit:]]*" | xargs)"
 	sed -i -e "s|CALAMARES_VERSION_PATCH $_patchver|CALAMARES_VERSION_PATCH $_patchver-$pkgrel|g" CMakeLists.txt
-	install -Dm644 "${srcdir}/ucode_main.py" "${srcdir}/$_pkgname-$pkgver/src/modules/ucode/main.py"
-	install -Dm644 "${srcdir}/ucode_module.desc" "${srcdir}/$_pkgname-$pkgver/src/modules/ucode/module.desc"
-	install -Dm644 "${srcdir}/dm_main.py" "${srcdir}/$_pkgname-$pkgver/src/modules/displaymanager/main.py"
-	install -Dm644 "${srcdir}/packages_main.py" "${srcdir}/$_pkgname-$pkgver/src/modules/packages/main.py"
+	install -Dm644 "${srcdir}/${pkgname}/ucode_main.py" "${srcdir}/$_pkgname-$pkgver/src/modules/ucode/main.py"
+	install -Dm644 "${srcdir}/${pkgname}/ucode_module.desc" "${srcdir}/$_pkgname-$pkgver/src/modules/ucode/module.desc"
+	install -Dm644 "${srcdir}/${pkgname}/dm_main.py" "${srcdir}/$_pkgname-$pkgver/src/modules/displaymanager/main.py"
+	install -Dm644 "${srcdir}/${pkgname}/packages_main.py" "${srcdir}/$_pkgname-$pkgver/src/modules/packages/main.py"
 }
 
 build() {
@@ -67,22 +60,8 @@ build() {
 package() {
 	cd ${_pkgname}-${pkgver}/build
 	make DESTDIR="$pkgdir" install
-	install -Dm644 "$srcdir/cal-ramallahos.desktop" "$pkgdir/usr/share/applications/cal-ramallahos.desktop"
-	install -Dm644 "$srcdir/cal-ramallahos-debugging.desktop" "$pkgdir/usr/share/applications/cal-ramallahos-debugging.desktop"
-	install -Dm755 "$srcdir/calamares_polkit" "$pkgdir/usr/bin/calamares_polkit"
+	install -Dm644 "${srcdir}/${pkgname}/cal-ramallahos.desktop" "$pkgdir/usr/share/applications/cal-ramallahos.desktop"
+	install -Dm644 "${srcdir}/${pkgname}/cal-ramallahos-debugging.desktop" "$pkgdir/usr/share/applications/cal-ramallahos-debugging.desktop"
+	install -Dm755 "${srcdir}/${pkgname}/calamares_polkit" "$pkgdir/usr/bin/calamares_polkit"
 	rm "$pkgdir/usr/share/applications/calamares.desktop"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
