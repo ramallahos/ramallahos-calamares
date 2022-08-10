@@ -1,0 +1,15 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Install RamallahOS
+Comment=Installer for RamallahOS
+GenericName=RamallahOS Installer
+Keywords=calamares;system;installer;
+TryExec=/usr/bin/calamares_polkit %f -style breeze
+Exec=/usr/bin/calamares_polkit %f -style breeze
+Icon=calamares
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GTK;Settings;Security;X-GNOME-Settings-Panel;X-GNOME-SystemSettings;X-Unity-Settings-Panel;X-XFCE-SettingsDialog;X-XFCE-SystemSettings;Utility;System;Filesystem;GNOME;Qt;KDE;
+X-AppStream-Ignore=true
