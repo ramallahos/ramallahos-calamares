@@ -2,7 +2,7 @@
 
 pkgname=ramallahos-calamares
 _pkgname=calamares
-pkgver=3.2.60
+pkgver=3.2.61
 pkgrel=01
 pkgdesc='Distribution-independent installer framework'
 arch=('i686' 'x86_64')
